@@ -4,15 +4,12 @@
 const logo = document.querySelector("div.conLogo img")
 const cont = document.querySelector("main div.conMain")
 const inputSearch = document.querySelector("input#busqueda")
+const buttonSalida = document.querySelector("button.btnPedido")
 
 
 
 
-//funcion que recupera una fruta de gondola segun su id. Generalmente se usa enviando un codigo de los objetos instanciados de comprarFruta, para entender que fruta de la gondola es la que esta comprando el usuario en su pedido.
-function recuperaFruta(codigo){
-    encontrado = gondola.find((fruta)=>{return fruta.id === codigo})
-    return encontrado
-}
+
 
 
 
@@ -185,20 +182,23 @@ function cargarFrutas(array){
     }
 }
 
-
+/*
+Funcion que carga el template modificado para ingresar la cantidad a comprar
+*/
 function cargarFrutasCompra(fruta){
     cont.innerHTML = templateCardCompra(fruta)   
 }
 
 
 
+const funcionBotonCancelar = () => location.href = "index.html"
+
+
+
 //Cargo todas las frutas de gondola
 cargarFrutas(gondola)
 
-//Funcion que devuelve el string enviado con su mayuscula
-function capitalize(string){
-    return string.charAt(0).toUpperCase() + string.slice(1)
-}
+
 
 //Agrego el evento search al input.
 inputSearch.addEventListener("search", () => {
@@ -207,113 +207,37 @@ inputSearch.addEventListener("search", () => {
     if (buscar.length > 0){
         cargarFrutas(buscar)
     }
+    eventosBotones() // Agrego funcionalidad a los botones luego de un evento search
 })
 
 
-/* 
-Funcion de comprar adaptada, recibe un codigo (correspondiente a un id de los objetos fruta del arreglo gondola)
-
-Captura la cantidad de kg de la fruta con un prompt (validado)
-
-instancia una fruta comprada con esa cantidad.
-
-luego recorre el arreglo del pedido, para ver si no se esta agregando una fruta ya comprada. En el caso de que si, avisa y pregunta si se desea agregar esa cantidad a la obtenida previamente.
-
-Finalmente luego de procesados los datos, llama al metodo confirmarAgregado de la clase, para enviar la fruta correspondiente al pedido.
 
 
-//// SEGUIR ACA //////
-Considerar hacer un html en vez de un prompt, por que es una mierda jaja.
-Si pongo "cancelar" me devuelve NaN, lo mismo que si ingreso un texto. (osea que no me queda funcional el boton cancelar). Se vería mas lindo todo si hago un html de salida para confirmar la compra e ingresar los datos.
-Entonces el boton tendria que referenciar al html de salida, y tomar los datos de sobre que fruta estamos hablando.
-en el html de salida deberiamos mostrar la card correspondiente y con unos input tomar la catidad a comprar, y recien ahi confirmar la compra.
-*/
-function compraFruta(codigo){
-    
-    let cantidad = parseFloat(prompt(`Ingrese la cantidad de kg de ${recuperaFruta(codigo).nombre} deseada`))
-    if(cantidad == null){
-        return 0
-        }
-    else{
-        while(cantidad < 0 || isNaN(cantidad)){
-            if(cantidad == null){
-                return 0
-            }
-            else{            
-            console.warn("Ha ingresado un valor de cantidad erroneo, por favor ingreselo nuevamente")
-            cantidad = parseFloat(prompt(`Ingrese la cantidad de kg de ${recuperaFruta(codigo).nombre} deseada`))
-            }
-        }
-
-        instancia = new comprarFrutas (codigo, cantidad)
-
-        let band1 = 0
-
-        for(fruta of pedidoFrutas){
-            if(fruta.codigo === instancia.codigo){
-                band1 = 1
-                if(confirm(`Su pedido ya incluye ${fruta.cantidadKg} Kg de ${recuperaFruta(fruta.codigo).nombre} ¿Desea agregar otros ${instancia.cantidadKg} Kg ?`)){
-                    fruta.cantidadKg = fruta.cantidadKg + instancia.cantidadKg
-                }else{
-                    console.warn("Su pedido no fue modificado.")
-                }
-            }
-        }
-
-        if(band1 == 0){
-            instancia.confirmarAgregado()
-            console.table(pedidoFrutas)
-        }
-    }
-    
-}
 
 
-//Agrego los eventos para cada boton (evento directamente compraFruta, por el momento queda comentada por el error del prompt con el cancelar)
-// function eventosBotones(){
-
-//     const botones = document.querySelectorAll("button.btnFruta")
-
-//     for (boton of botones){
-
-//         boton.addEventListener("click", (e)=>compraFruta(parseInt(e.target.id)))
-
-//         boton.addEventListener("mousemove", (e)=>{
-            
-//             let fruta = recuperaFruta(parseInt(e.target.id))
-                
-//             e.target.title=`Agregar ${fruta.nombre} al carrito`
-//         })
-    
-//     }
-// }
 
 
 
 /*
-Funcion modificadora de cards:
-En el caso de oprimir el boton comprar, esta funcion va a agregar nuevas funcionalidades a las cards
-*/
-function modificaCard(codigo){
-
-}
-
-
-
-/*
-La siguiente funcion va a manejar las cards en base al boton comprar
+La siguiente funcion va a manejar las cards en base al boton comprar:
+- Asigno todos los botones a un array "botones"
+- Recorro el array
+- Agrego el evento click a cada boton y envio el objeto event
+- defino un arrayUnitario para mostrar la card correspondiente al clickeo (vacio)
+- recupero la fruta clickeada en base al id del objeto event
+- Ejecuto la funcion cargarFrutasCompra, referida al objeto fruta clickeada para mostrar la card con el input number.
+- Ejecuto la funcion eventosBotonesAddCancel (*ver funcion) que le da funcionalidad a los dos botones.
+- Paralelamente al recorrer el array tambien se agrega el evento mousemove para que aparezca un titulo antes de apretar
 */
 function eventosBotones(){
-
     const botones = document.querySelectorAll("button.btnFruta")
 
     for (boton of botones){
 
         boton.addEventListener("click", (e)=>{
-            const arrayUnit = []
             let fruta = recuperaFruta(parseInt(e.target.id))
             cargarFrutasCompra(fruta)
-        
+            eventosBotonesAddCancel()
         })
 
 
@@ -327,9 +251,47 @@ function eventosBotones(){
     }
 }
 
+/*
+Le agrego funcion a los botones "Agregar" y "Cancelar":
+No sabia como diferenciar los botones por su contenido, para ello la solucion que encontre fue asignarlos genericamente con un querySelectorAll
+y luego a traves de la propiedad "e.target.innerText" del objeto event, diferenciarlos.
+- recupero el pedido de local storage
+- Genero array de botones(en este caso son solo 2)
+- Recorro array y comparo con un if el contenido del texto interno del nodo
+- si es agregar: tomo el inputnumber y llamo a la funcion "compraFruta(target.id, value)" y guardo el arreglo en local storage
+- si es cancelar: refiero a index.html para que se vuelvan a cargar las frutas.
 
+*/
+function eventosBotonesAddCancel(){
+    recuperoPedido()
+    const buttonAddCancel = document.querySelectorAll("button.btnFruta")
+    for (boton of buttonAddCancel){
 
+        boton.addEventListener("click",(e) => {
+            
+            if(e.target.innerText == "Agregar"){
+                const inputNumber = document.querySelector("input.inputNumber")
+                compraFruta(parseInt(e.target.id), parseInt(inputNumber.value))
+                guardoPedido()
+                location.href = "index.html"
+            }
+
+            if(e.target.innerText == "Cancelar"){
+                location.href = "index.html"
+            }
+            
+        })
+    }
+}
 
 eventosBotones()
 
+
+
+recuperoPedido()
+
+
+//agrego evento al boton para abrir salida.html
+buttonSalida.addEventListener("click", ()=>{ location.href = "./pages/salida.html"})
+// buttonSalida.addEventListener("mousemove", ()=> buttonSalida.className = "btnPedido conLogoHover")
 

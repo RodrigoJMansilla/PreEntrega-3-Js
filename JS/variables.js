@@ -27,11 +27,11 @@ let gondola=[   {id: 1, nombre: 'Banana', precio: 500, stockKg: 100, ruta: "./im
                 {id: 5, nombre: 'Limón', precio: 400, stockKg: 120, ruta: "./images/limones-resized.png" },
                 {id: 6, nombre: 'Naranja', precio: 500, stockKg: 140, ruta: "./images/naranjas-resized.png"},
                 {id: 7, nombre: 'Frutilla', precio: 2400, stockKg: 80, ruta: "./images/frutillas-resized.jpg"},
-                {id: 9, nombre: 'Arandanos', precio: 2200, stockKg: 110, ruta: "./images/arandanos-resized.jpg"},
-                {id: 10, nombre: 'Durazno', precio: 750, stockKg: 125, ruta: "./images/durazno-resized.jpg"},
-                {id: 11, nombre: 'Mandarina', precio: 650, stockKg: 95, ruta: "./images/mandarinas-resized.jpg"},
-                {id: 12, nombre: 'Kiwi', precio: 1900, stockKg: 130, ruta: "./images/kiwi-resized.jpg"},
-                {id: 13, nombre: 'Melón', precio: 400, stockKg: 120, ruta: "./images/melones-resized.jpg"}
+                {id: 8, nombre: 'Arandanos', precio: 2200, stockKg: 110, ruta: "./images/arandanos-resized.jpg"},
+                {id: 9, nombre: 'Durazno', precio: 750, stockKg: 125, ruta: "./images/durazno-resized.jpg"},
+                {id: 10, nombre: 'Mandarina', precio: 650, stockKg: 95, ruta: "./images/mandarinas-resized.jpg"},
+                {id: 11, nombre: 'Kiwi', precio: 1900, stockKg: 130, ruta: "./images/kiwi-resized.jpg"},
+                {id: 12, nombre: 'Melón', precio: 400, stockKg: 120, ruta: "./images/melones-resized.jpg"}
                 ]
 
 //pedidoFrutas este array vacio va a ir agregando objetos de la clase comprarFrutas
@@ -57,8 +57,8 @@ tiene dos metodos:
 */
 class comprarFrutas {
     constructor(codigo, cantidad){
-        this.codigo = codigo
-        this.cantidadKg = cantidad
+        this.codigo = parseInt(codigo)
+        this.cantidadKg = parseFloat(cantidad)
     }
 
     consultarPrecio(){
@@ -70,7 +70,7 @@ class comprarFrutas {
         return parseFloat(coincidencia.precio * this.cantidadKg).toFixed(2)
     }
 
-    confirmarAgregado(){
+    confirmarAgregado(instanciaActual){// se pide como parametro una instancia de la propia clase "actual"
 
         let coincidencia = gondola.find((fruta)=>{
             return fruta.id === parseInt(this.codigo)
@@ -78,10 +78,10 @@ class comprarFrutas {
 
         let costo = this.consultarPrecio()
 
-        let rta = confirm(`Usted desea ${this.cantidadKg}Kg de ${coincidencia.nombre} por un costo de ${costo}`)
+        let rta = confirm(`¿Usted desea ${this.cantidadKg}Kg de ${coincidencia.nombre} por un costo de $${costo}?`)
 
         if(rta){
-            pedidoFrutas.push(new comprarFrutas(this.codigo, this.cantidadKg)) // Esta es la forma que encontre para poder enviar una instancia de esta misma clase, con un metodo propio a un array que contenga el pedido.
+            pedidoFrutas.push(instanciaActual) // Ahora lo que se va a enviar es la propia instancia recibida como parametro.
             console.log(`Se agregaron ${this.cantidadKg}Kg de ${coincidencia.nombre} al pedido.`)
         }
         else{

@@ -13,7 +13,7 @@ body{
     line-height: 1.6;
 }
 
-.conTitle{
+/* .conTitle{
     display: grid;
     grid-template-areas: 
     'logo title icono';
@@ -22,6 +22,17 @@ body{
     background-color: #790068;
     justify-content: center;
     align-content: center;
+    z-index: 1;
+    position: sticky;
+    top: 0;
+} */
+
+.conTitle{
+    display: flex;
+    height: 85px;
+    background-color: #790068;
+    justify-content: space-around;
+    align-items: center;
     z-index: 1;
     position: sticky;
     top: 0;
@@ -46,6 +57,24 @@ body{
     justify-self: center;
 
     font-family: 'Roboto', sans-serif;
+}
+
+.btnPedido{
+    font-family: 'Roboto', sans-serif;
+    color: #790068;
+    background-color: white;
+    border: 0.5px solid #790068;
+    border-radius: 2px;
+    font-size: 1.3rem;
+    padding: 2px 5px 2px 5px;
+    margin: 2px 0px 5px 0px;
+}
+
+.btnPedido:hover{
+    cursor: pointer;
+    background-color: #790068;
+    color: white;
+
 }
 
 .inputS{
@@ -243,4 +272,80 @@ h2{
     padding: 30px 0 0 50px;
     color: aliceblue;
     font-family: 'Roboto', sans-serif;
+}
+
+
+/*
+---------------------------------- SALIDA.HTML ------------------------------------------
+*/
+
+.contSalida{
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 510px;
+
+
+
+}
+
+.contRow{
+    display: flex;
+    width: 50%;
+    border: 0.5px solid grey;
+    border-radius: 8px;
+    flex-direction: row;
+    align-items: center;
+    justify-self: center;
+    overflow: hidden;
+    margin: 5px 0px;
+}
+
+.contSalidaCol{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+.imgSalida{
+    width: 82.5px;
+    height: 75px;
+    border-radius: 8px;
+}
+
+.contTituloFruta{
+    width: 40%;    
+}
+.contCantFruta{
+    width: 20%
+}
+.contPrecioFruta{
+    width: 20%;
+}
+.contButtonFruta{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.tituloFrutasalida{
+    text-align: center;
+}
+
+.precioFrutaSalida{
+    width: auto;
+    height: auto;
+    padding: 0;
+    text-align: center;
+}
+
+.buttonFruta:hover{
+    cursor: pointer;
 }
