@@ -1,6 +1,7 @@
 
 // Linkeos con querySelector
 
+const logo = document.querySelector("div.conLogo img")
 const cont = document.querySelector("main div.conMain")
 const inputSearch = document.querySelector("input#busqueda")
 
@@ -166,6 +167,14 @@ function actualizarStock(arrayVenta){
 
 //----------------------------------------------------//
 
+//le agrego funcionalidad al boton del index en el logo y un mousemove
+logo.addEventListener("click", ()=> {
+    location.href = "index.html"
+})
+logo.addEventListener("mousemove",()=>{
+    logo.className = "conLogoHover"
+})
+
 // Funcion que carga en el HTML interno del div "conMain" en el main todas las frutas del arreglo "gondola", presentadas en cards.
 function cargarFrutas(array){
     cont.innerHTML = ""
@@ -175,6 +184,13 @@ function cargarFrutas(array){
         })
     }
 }
+
+
+function cargarFrutasCompra(fruta){
+    cont.innerHTML = templateCardCompra(fruta)   
+}
+
+
 
 //Cargo todas las frutas de gondola
 cargarFrutas(gondola)
@@ -253,24 +269,66 @@ function compraFruta(codigo){
 }
 
 
-//Agrego los eventos para cada boton
+//Agrego los eventos para cada boton (evento directamente compraFruta, por el momento queda comentada por el error del prompt con el cancelar)
+// function eventosBotones(){
+
+//     const botones = document.querySelectorAll("button.btnFruta")
+
+//     for (boton of botones){
+
+//         boton.addEventListener("click", (e)=>compraFruta(parseInt(e.target.id)))
+
+//         boton.addEventListener("mousemove", (e)=>{
+            
+//             let fruta = recuperaFruta(parseInt(e.target.id))
+                
+//             e.target.title=`Agregar ${fruta.nombre} al carrito`
+//         })
+    
+//     }
+// }
+
+
+
+/*
+Funcion modificadora de cards:
+En el caso de oprimir el boton comprar, esta funcion va a agregar nuevas funcionalidades a las cards
+*/
+function modificaCard(codigo){
+
+}
+
+
+
+/*
+La siguiente funcion va a manejar las cards en base al boton comprar
+*/
 function eventosBotones(){
 
     const botones = document.querySelectorAll("button.btnFruta")
 
     for (boton of botones){
 
-        boton.addEventListener("click", (e)=>compraFruta(parseInt(e.target.id)))
-
-        boton.addEventListener("mousemove", (e)=>{
-            
+        boton.addEventListener("click", (e)=>{
+            const arrayUnit = []
             let fruta = recuperaFruta(parseInt(e.target.id))
-                
-            e.target.title=`Agregar ${fruta.nombre} al carrito`
+            cargarFrutasCompra(fruta)
+        
+        })
+
+
+        // Esta parte queda igual, ya que hace referencia al cartelito cuando pasamos el cursor por encima del boton
+        boton.addEventListener("mousemove", (e)=>{
+
+            let fruta = recuperaFruta(parseInt(e.target.id))
+            e.target.title=`Agregar ${fruta.nombre} al pedido`
         })
     
     }
 }
+
+
+
 
 eventosBotones()
 
