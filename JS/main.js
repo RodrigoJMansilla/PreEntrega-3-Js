@@ -10,123 +10,6 @@ const buttonSalida = document.querySelector("button.btnPedido")
 
 
 
-
-
-
-
-//------------------- FUNCIONES ENTREGA ANTERIOR -----------------
-
-// funcion que calcula el total del costo del pedido
-function calcularTotal(){
-    let acum = 0
-    for(fruta of pedidoFrutas){
-        acum += parseFloat(fruta.consultarPrecio())
-    }
-    return acum
-}
-
-//caso ver pedido
-//funcion que muestra todo el pedido 
-function verPedido(){
-    console.log('Su pedido esta formado por:\n')
-    for(fruta of pedidoFrutas){
-        let estaFruta = gondola.find((i)=>{ return i.id === fruta.codigo })
-
-        console.log(`${fruta.cantidadKg}Kg de ${estaFruta.nombre} por $${fruta.consultarPrecio()}`)
-
-    }
-    acum = calcularTotal()
-    console.log(`El costo total de su pedido es de: $${acum}`)
-}
-
-//funcion que calcula cuotas
-function calculaCuotas(precio, i){
-    
-    if(i==3){
-        precio *= 1.2
-        return precio/i
-    }
-    else if(i==6){
-        precio *= 1.45
-        return precio/i
-    }
-}
-
-//caso efectuar la compra
-//funcion que corrobora la accion de finalizar y ofrece cuotas
-function finalizarCompra(){
-    alert(`El precio final de su carrito es de: $${calcularTotal()}`)
-
-    if(confirm("Desea pagar en cuotas?")){
-        iCuotas = parseInt(prompt(msjCuotas))
-        
-        while((iCuotas !== 3 && iCuotas !== 6) || isNaN(iCuotas)){
-            console.warn("El numero de cuotas debe ser 3 o 6, ingreselo nuevamente.\n")
-            iCuotas = parseInt(prompt("ingrese '3' o '6' de acuerdo a la cantidad de cuotas requeridas."))
-        }
-
-        alert("El pago se realizara en " + iCuotas + " cuotas de $" + calculaCuotas(calcularTotal(), iCuotas))
-    }
-    direccionCliente = prompt("Ingrese la dirección de envío:")
-    alert("Muchas Gracias por su compra! ya estamos preparando su pedido.")
-}
-
-// funcion resetear: inicializa las variables de nuevo a 0.
-function resetear(){
-    pedidoFrutas=[]
-}
-
-// funcion iniciar: genera el loop del menu
-function iniciar(){
-    resetear()
-    while(continuar){
-        menu()
-    }
-}
-
-//funcion menu
-function menu(){
-    choice = parseInt(prompt(msjMenu))
-    switch(choice){
-        case 1:
-            // caso agregar producto
-            agregoCarrito()
-            break
-        case 2:
-            // caso ver las frutas del carrito
-            verPedido()
-            break
-        case 3:
-            // caso ver costo total del carrito
-            if(confirm("¿Desea Finalizar su compra?")){
-                finalizarCompra()
-                actualizarStock(pedidoFrutas)
-                continuar = false
-            }
-            break
-        default:
-            break
-    }
-}
-
-// funcion que resta todo el stock vendido de "pedidoFrutas" del stock de gondola. Esta funcion como no interactua con el usuario, se puede corroborar viendo el array gondola, luego de finalizada la compra.
-function actualizarStock(arrayVenta){
-    let frutaGondola
-    arrayVenta.forEach((fruta)=>{
-        frutaGondola = recuperaFruta(fruta.codigo)
-        frutaGondola.stockKg = frutaGondola.stockKg - fruta.cantidadKg
-        gondola[frutaGondola.id-1].stockKg = frutaGondola.stockKg
-    })
-}
-
-
-//----------------------------------------------------//
-
-
-
-
-
-
 //le agrego funcionalidad al boton del index en el logo y un mousemove
 logo.addEventListener("click", ()=> {
     location.href = "index.html"
@@ -171,11 +54,6 @@ inputSearch.addEventListener("search", () => {
     }
     eventosBotones() // Agrego funcionalidad a los botones luego de un evento search
 })
-
-
-
-
-
 
 
 
@@ -233,9 +111,13 @@ function eventosBotonesAddCancel(){
             
             if(e.target.innerText == "Agregar"){
                 const inputNumber = document.querySelector("input.inputNumber")
-                compraFruta(parseInt(e.target.id), parseFloat(inputNumber.value))
-                guardoPedido()
-                location.href = "index.html"
+                if(!isNaN(parseInt(inputNumber.value))){
+                    compraFruta(parseInt(e.target.id), parseFloat(inputNumber.value))
+                    guardoPedido()
+                    location.href = "index.html"
+                }else{
+                    console.warn("No esta agregando una cantidad numerica.")
+                }
             }
 
             if(e.target.innerText == "Cancelar"){

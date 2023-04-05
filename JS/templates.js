@@ -69,14 +69,14 @@ const templateDivTotal = () => {
                     <div class="contTituloFruta">
                         <h4 class="tituloFruta tituloFrutasalida tituloFrutaPedido">Precio Total: $${total}</h4>
                     </div>
-                    <form class="formCombo">
+                    <div class="formCombo">
                         <select class="selCombo">
                             <option class="optCombo" value="opcion1">1 Cuota</option>
                             <option class="optCombo"  value="opcion2">3 Cuotas</option>
                             <option class="optCombo" value="opcion3">6 Cuotas</option>
                         </select>
-                        <input class="btnPedido inputSub" type="submit" value="Comprar">
-                    </form>
+                        <button class="btnPedido inputSub">Comprar</button>
+                    </div>
                 </div>
             </div>   `
 }
