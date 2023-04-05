@@ -55,6 +55,7 @@ tiene dos metodos:
 - confirmarAgregado: Este muestra el costo de la cantidad de fruta a comprar y solicita una confirmacion para que la fruta sea agregada al pedido. Una vez confirmado, el metodo envia la instancia de la clase en cuestion (entera) al array que conforma el pedido "pedidoFrutas"
 
 */
+
 class comprarFrutas {
     constructor(codigo, cantidad){
         this.codigo = parseInt(codigo)

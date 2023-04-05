@@ -43,7 +43,7 @@ const templateCardCompra = (fruta) => {
 const templateDivSalida = (compra) => {
     fruta = recuperaFruta(compra.codigo)
     return `<div class="contRow">
-                <img class="imgSalida" src="${fruta.ruta}" alt="imagen de ${fruta.nombre}">
+                <img class="imgSalida" src=".${fruta.ruta}" alt="imagen de ${fruta.nombre}">
                 <div class="contSalidaCol">
                     <div class="contTituloFruta">
                         <h4 class="tituloFruta tituloFrutasalida">${fruta.nombre}</h4>

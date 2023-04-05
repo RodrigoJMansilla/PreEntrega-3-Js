@@ -32,6 +32,8 @@ Funcion que recupera el array "pedidoFrutas"
 - verifico que haya algo bajo la clave "pedidoFrutas"
 - recupero el arreglo "pedidoFrutas" en un arreglo auxiliar.
 - itero el arreglo auxiliar y voy pusheando hacia mi arreglo "pedidoFrutas" el contenido de la clave en local storage.
+- Se incluye un paso intermedio en dodne recorro el arreglo auxiliar y voy instanciando nuevas "comprarFrutas" segun las propiedades del objeto del arreglo auxiliar. 
+ESTO SE HACE POR QUE AL RECUPERAR DE LOCAL STORAGE con JSON.parse(), SE PIERDE LA CLASE DEL OBJETO Y POR CONSIGUIENTE SUS METODOS.
 */
 
 function recuperoPedido(){
@@ -39,8 +41,11 @@ function recuperoPedido(){
     if(localStorage.getItem("pedidoFrutas")){
         const arrayAux = JSON.parse(localStorage.getItem("pedidoFrutas"))
 
-        pedidoFrutas.push(...arrayAux)
+        arrayAux.forEach((compra)=>{
+            let instanciaCompra = new comprarFrutas (compra.codigo, compra.cantidadKg)
 
+            pedidoFrutas.push(instanciaCompra)
+        })
         console.table(pedidoFrutas)
         console.log("se recupero este arreglo en pedidoFrutas[]")
     }
