@@ -1,6 +1,7 @@
 
 const contSalida = document.querySelector("div.contSalida")
 const logo = document.querySelector("div.conLogo img")
+const btnvolver = document.querySelector("button.btnPedido.volver")
 
 //le agrego funcionalidad al boton del index en el logo y un mousemove
 logo.addEventListener("click", ()=> {
@@ -9,6 +10,11 @@ logo.addEventListener("click", ()=> {
 logo.addEventListener("mousemove",()=>{
     logo.className = "conLogoHover"
 })
+
+btnvolver.addEventListener("click", ()=> {
+    location.href = "../index.html"
+})
+
 
 
 //Funcion que carga la vista del array pedidoFrutas
