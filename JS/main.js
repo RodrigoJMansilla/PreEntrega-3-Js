@@ -13,45 +13,9 @@ const buttonSalida = document.querySelector("button.btnPedido")
 
 
 
-// // caso agregar producto
-// function agregoCarrito(){
-//     let codigo = parseInt(prompt(msjFrutas))
 
-//     while(isNaN(codigo) || recuperaFruta(codigo)== undefined){
-//             console.warn("Ha ingresado un valor erroneo. Por favor ingreselo nuevamente\n")
-//             codigo = parseInt(prompt(msjFrutas))       
-//     }
+//------------------- FUNCIONES ENTREGA ANTERIOR -----------------
 
-//     let cantidad = parseFloat(prompt(`Ingrese la cantidad de kg de ${recuperaFruta(codigo).nombre} deseada`))
-
-//     while(cantidad < 0 || isNaN(cantidad)){
-//         console.warn("Ha ingresado un valor de cantidad erroneo, por favor ingreselo nuevamente")
-//         cantidad = parseFloat(prompt(`Ingrese la cantidad de kg de ${recuperaFruta(codigo).nombre} deseada`))
-//     }
-
-//     instancia = new comprarFrutas (codigo, cantidad)
-
-//     let band1 = 0
-
-//     for(fruta of pedidoFrutas){
-//         if(fruta.codigo === instancia.codigo){
-//             band1 = 1
-//             if(confirm(`Su pedido ya incluye ${fruta.cantidadKg} Kg de ${recuperaFruta(fruta.codigo).nombre} ¿Desea agregar otros ${instancia.cantidadKg} Kg ?`)){
-//                 fruta.cantidadKg = fruta.cantidadKg + instancia.cantidadKg
-//             }else{
-//                 console.warn("Su pedido no fue modificado.")
-//             }
-//         }
-//     }
-
-//     if(band1 == 0){
-//         instancia.confirmarAgregado()
-//     }
-    
-// }
-
-
-/* ACTIVIDAD VER DE IMPLEMENTAR CON FOREACH */
 // funcion que calcula el total del costo del pedido
 function calcularTotal(){
     let acum = 0
@@ -60,9 +24,6 @@ function calcularTotal(){
     }
     return acum
 }
-
-
-
 
 //caso ver pedido
 //funcion que muestra todo el pedido 
@@ -77,7 +38,6 @@ function verPedido(){
     acum = calcularTotal()
     console.log(`El costo total de su pedido es de: $${acum}`)
 }
-
 
 //funcion que calcula cuotas
 function calculaCuotas(precio, i){
@@ -160,9 +120,12 @@ function actualizarStock(arrayVenta){
 }
 
 
-
-
 //----------------------------------------------------//
+
+
+
+
+
 
 //le agrego funcionalidad al boton del index en el logo y un mousemove
 logo.addEventListener("click", ()=> {
@@ -189,8 +152,7 @@ function cargarFrutasCompra(fruta){
     cont.innerHTML = templateCardCompra(fruta)   
 }
 
-
-
+//Le agrego funcionalidad al boton cancelar para que me devuelva al index sin hacer nada (y se carguen nuevamente las frutas)
 const funcionBotonCancelar = () => location.href = "index.html"
 
 
@@ -271,7 +233,7 @@ function eventosBotonesAddCancel(){
             
             if(e.target.innerText == "Agregar"){
                 const inputNumber = document.querySelector("input.inputNumber")
-                compraFruta(parseInt(e.target.id), parseInt(inputNumber.value))
+                compraFruta(parseInt(e.target.id), parseFloat(inputNumber.value))
                 guardoPedido()
                 location.href = "index.html"
             }
