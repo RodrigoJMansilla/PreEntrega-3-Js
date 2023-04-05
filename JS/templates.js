@@ -39,7 +39,7 @@ const templateCardCompra = (fruta) => {
             </div>`
 }
 
-
+//Este template se corresponde con una vista del arreglo pedidoFrutas con la informacion 
 const templateDivSalida = (compra) => {
     fruta = recuperaFruta(compra.codigo)
     return `<div class="contRow">
@@ -49,10 +49,10 @@ const templateDivSalida = (compra) => {
                         <h4 class="tituloFruta tituloFrutasalida">${fruta.nombre}</h4>
                     </div>
                     <div class="contCantFruta">
-                        <p class="precioFruta precioFrutaSalida">${compra.cantidadKg}</p>
+                        <p class="precioFruta precioFrutaSalida">${compra.cantidadKg}Kg</p>
                     </div>
                     <div class="contPrecioFruta">
-                        <p class="precioFruta precioFrutaSalida">${compra.consultarPrecio()}</p>
+                        <p class="precioFruta precioFrutaSalida">$${compra.consultarPrecio()}</p>
                     </div>
                     <div class="contButtonFruta">
                         <button id="${fruta.id}" class="buttonFruta">❌</button>
@@ -60,3 +60,24 @@ const templateDivSalida = (compra) => {
                 </div>
             </div>`
 }
+
+//Template del ultimo div que contiene la informacion para finalizar la compra
+const templateDivTotal = () => {
+    let total = totalPedido()
+    return `<div class="contRow contRowPedido">
+                <div class="contSalidaCol">
+                    <div class="contTituloFruta">
+                        <h4 class="tituloFruta tituloFrutasalida tituloFrutaPedido">Precio Total: $${total}</h4>
+                    </div>
+                    <form class="formCombo">
+                        <select class="selCombo">
+                            <option class="optCombo" value="opcion1">1 Cuota</option>
+                            <option class="optCombo"  value="opcion2">3 Cuotas</option>
+                            <option class="optCombo" value="opcion3">6 Cuotas</option>
+                        </select>
+                        <input class="btnPedido inputSub" type="submit" value="Comprar">
+                    </form>
+                </div>
+            </div>   `
+}
+

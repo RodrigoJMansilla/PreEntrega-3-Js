@@ -294,7 +294,7 @@ h2{
 
 .contRow{
     display: flex;
-    width: 50%;
+    width: 75%;
     border: 0.5px solid grey;
     border-radius: 8px;
     flex-direction: row;
@@ -349,3 +349,58 @@ h2{
 .buttonFruta:hover{
     cursor: pointer;
 }
+
+
+
+/* Estilos para el ultimo template*/ 
+
+
+.contRowPedido{
+    height: 75px;
+    background-color: #790068;
+    margin: 20px 0px;
+}
+
+.tituloFrutaPedido{
+    color: white;
+}
+
+.formCombo{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}  
+
+.selCombo{
+    font-family: 'Roboto', sans-serif;
+    background-color: white;
+    border: 0.1rem solid #d1d1d1;
+    border-radius: 0.4rem;
+    color: #790068;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.inputSub{
+    margin: 0;
+    height: 30px;
+    margin-left: 5px;
+    border-radius: 4px;
+}
+.inputSub:hover{
+    background-color: white;
+    color: #790068;
+    text-decoration: underline;
+}
+
+/* BORRAR */
+/* .inputS{
+    font-family: 'Roboto', sans-serif;
+    background-color: transparent;
+    border: 0.1rem solid #d1d1d1;
+    border-radius: 0.4rem;
+    height: 2.5rem;
+    margin: 30px 2% 0 2%; 
+    padding: 0.6rem 1rem 0.7rem;
+    width: 96%;
+} */

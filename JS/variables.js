@@ -63,12 +63,12 @@ class comprarFrutas {
     }
 
     consultarPrecio(){
-        
+
         let coincidencia = gondola.find((fruta)=>{
             return fruta.id === parseInt(this.codigo)
         })
 
-        return parseFloat(coincidencia.precio * this.cantidadKg).toFixed(2)
+        return parseFloat(parseInt(coincidencia.precio) * this.cantidadKg).toFixed(2)
     }
 
     confirmarAgregado(instanciaActual){// se pide como parametro una instancia de la propia clase "actual"

@@ -15,12 +15,10 @@ function recuperaFruta(codigo){
 - Guardo bajo la clave "pedidoFrutas" el array en localStorage
 */
 function guardoPedido(){
-    if(pedidoFrutas.length > 0){
-        localStorage.setItem("pedidoFrutas", JSON.stringify(pedidoFrutas))
-        console.table(pedidoFrutas)
-        console.log("Se guardo Este arreglo en local storage")
-    }
-    console.log("no habia arreglo pedidoFrutas en local storage")
+    
+    localStorage.setItem("pedidoFrutas", JSON.stringify(pedidoFrutas))
+    console.table(pedidoFrutas)
+    console.log("Se guardo Este arreglo en local storage")
 
 }
 
@@ -60,20 +58,16 @@ function capitalize(string){
 
 
 /* 
-Funcion de comprar adaptada, recibe un codigo (correspondiente a un id de los objetos fruta del arreglo gondola)
-
-Captura la cantidad de kg de la fruta con un prompt (validado)
-
-instancia una fruta comprada con esa cantidad.
-
-luego recorre el arreglo del pedido, para ver si no se esta agregando una fruta ya comprada. En el caso de que si, avisa y pregunta si se desea agregar esa cantidad a la obtenida previamente.
-
-Finalmente luego de procesados los datos, llama al metodo confirmarAgregado de la clase, para enviar la fruta correspondiente al pedido.
+Funcion de comprar adaptada, recibe el codigo y la cantidad, requeridos por la clase comprarFrutas. Estos van a provenir del id del boton agregar apretado correspondiente a una fruta, y la cantidad del inputNumber.
+- se genera una instancia de comprarFrutas con estos datos.
+- Se define una band = 0
+- se itera el arreglo pedidoFrutas para verificar el caso en el que la fruta ya haya sido agregada previamente, para ellos se hace un if y se compara el codigo de la instancia nueva, con el codigo de todas las frutas en el arrego.
+    *si hay coincidencia, se cambia band a 1, para tomar el estado de SI, y pregunta al usuario si se desea agregar esto al pedido anterior o no. En este caso no se envia una nueva instancia de comprarFruta al arreglo, sino que se modifican las propiedades de la ya existente
+    *si no hay coincidencia, quiere decir que entonces es una fruta que no habia sido agregada previamente, y se ejecuta el metodo de la clase "confirmarAgregado" que envia la instancia al arreglo pedidoFrutas. 
 
 */
 function compraFruta(codigo, cantidad){
     
-
     instancia = new comprarFrutas (codigo, cantidad)
 
     let band1 = 0
@@ -93,6 +87,16 @@ function compraFruta(codigo, cantidad){
         instancia.confirmarAgregado(instancia)
         console.table(pedidoFrutas)
     }
+}
 
+/*
+Funcion que itera el arreglo pedidoFrutas y calcula el costo total del pedido
+*/
+function totalPedido(){
+    let total = 0
+    pedidoFrutas.forEach((compra) => {
+        total += parseFloat(compra.consultarPrecio())
+    })
 
+    return total
 }
